@@ -13,9 +13,24 @@ public class AppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
 	}
+
 	@GetMapping("/numconc")
-	public String numberConcat(@RequestParam(value="n1", defaultValue = "0") Integer num_1, @RequestParam(value="n2", defaultValue = "0") Integer num_2){
+	public String numberConcat(@RequestParam(value = "n1", defaultValue = "0") Integer num_1, @RequestParam(value = "n2", defaultValue = "0") Integer num_2) {
 		return num_1.toString() + num_2.toString();
 	}
 
+	@GetMapping("/sum")
+	public String sum(@RequestParam(value = "n1", defaultValue = "0") Integer num_1, @RequestParam(value = "n2", defaultValue = "0") Integer num_2) {
+		return Integer.toString(num_1 + num_2);
+	}
+
+	@GetMapping("/rest")
+	public String rest(@RequestParam(value = "n1", defaultValue = "0") Integer num_1, @RequestParam(value = "n2", defaultValue = "0") Integer num_2) {
+		return Integer.toString(num_1 % num_2);
+	}
+
+	@GetMapping("/multiplication")
+	public String multiplication(@RequestParam(value = "n1", defaultValue = "0") Integer num_1, @RequestParam(value = "n2", defaultValue = "0") Integer num_2) {
+		return Integer.toString(num_1 * num_2);
+	}
 }
