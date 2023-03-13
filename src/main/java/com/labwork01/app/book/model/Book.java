@@ -22,7 +22,7 @@ public class Book {
     joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
-    @ManyToOne
+    @ManyToOne //to do
     private Author author;
     public Book() {
     }
