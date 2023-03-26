@@ -3,10 +3,10 @@ package com.labwork01.app;
 import com.labwork01.app.author.model.Author;
 import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.model.Book;
+import com.labwork01.app.book.service.BookNotFoundException;
 import com.labwork01.app.book.service.BookService;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.service.GenreService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -121,7 +121,7 @@ public class JpaBookTests {
     @Test
     void testBookReadNotFound() {
         bookService.deleteAllBooks();
-        Assertions.assertThrows(EntityNotFoundException.class, () -> bookService.findBook(-1L));
+        Assertions.assertThrows(BookNotFoundException.class, () -> bookService.findBook(-1L));
     }
     @Test
     void testBookReadAllEmpty() {

@@ -1,8 +1,8 @@
 package com.labwork01.app;
 
 import com.labwork01.app.author.model.Author;
+import com.labwork01.app.author.service.AuthorNotFoundException;
 import com.labwork01.app.author.service.AuthorService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class JpaAuthorTests {
     @Test
     void testAuthorReadNotFound() {
         authorService.deleteAllAuthors();
-        Assertions.assertThrows(EntityNotFoundException.class, () -> authorService.findAuthor(-1L));
+        Assertions.assertThrows(AuthorNotFoundException.class, () -> authorService.findAuthor(-1L));
     }
 
     @Test

@@ -1,8 +1,8 @@
 package com.labwork01.app;
 
 import com.labwork01.app.genre.model.Genre;
+import com.labwork01.app.genre.service.GenreNotFoundException;
 import com.labwork01.app.genre.service.GenreService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class JpaGenreTests {
     @Test
     void testGenreReadNotFound() {
         genreService.deleteAllGenres();
-        Assertions.assertThrows(EntityNotFoundException.class, () -> genreService.findGenre(-1L));
+        Assertions.assertThrows(GenreNotFoundException.class, () -> genreService.findGenre(-1L));
     }
 
     @Test
