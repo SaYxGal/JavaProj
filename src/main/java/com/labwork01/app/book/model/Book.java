@@ -22,7 +22,8 @@ public class Book {
     joinColumns = @JoinColumn(name = "book_id"),
     inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
-    @ManyToOne //to do
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id", nullable = false)
     private Author author;
     public Book() {
     }
@@ -40,6 +41,9 @@ public class Book {
             author.getBooks().add(this);
         }
     }
+    public Author getAuthor() {
+        return author;
+    }
     public List<Genre> getGenres() {
         return genres;
     }
@@ -53,7 +57,11 @@ public class Book {
             genre.getBooks().add(this);
         }
     }
-
+    public void removeGenre(Genre genre){
+        if(genres != null){
+            genres.remove(genre);
+        }
+    }
     public Long getId() {
         return id;
     }

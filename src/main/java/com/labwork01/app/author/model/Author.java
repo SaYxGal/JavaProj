@@ -17,8 +17,8 @@ public class Author {
     @Column(nullable = false)
     private String surname;
     private String patronymic;
-    @OneToMany(mappedBy = "author")
-    private List<Book> books = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "author", fetch = FetchType.EAGER)
+    private List<Book> books =new ArrayList<>();
 
     public List<Book> getBooks() {
         return books;

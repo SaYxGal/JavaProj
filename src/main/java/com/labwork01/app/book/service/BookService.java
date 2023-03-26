@@ -57,7 +57,24 @@ public class BookService {
         currentBook.setAuthor(author);
         return em.merge(currentBook);
     }
-
+    @Transactional
+    public Book addGenreToBook(Long id, Genre genre){
+        if(id <= 0 || genre == null){
+            throw new IllegalArgumentException("Book fields is null or empty");
+        }
+        final Book currentBook = findBook(id);
+        currentBook.addGenre(genre);
+        return em.merge(currentBook);
+    }
+    @Transactional
+    public Book removeGenreFromBook(Long id, Genre genre){
+        if(id <= 0 || genre == null){
+            throw new IllegalArgumentException("Book fields is null or empty");
+        }
+        final Book currentBook = findBook(id);
+        currentBook.removeGenre(genre);
+        return em.merge(currentBook);
+    }
     @Transactional
     public Book deleteBook(Long id) {
         final Book currentBook = findBook(id);
