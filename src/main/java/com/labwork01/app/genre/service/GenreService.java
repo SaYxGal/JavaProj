@@ -1,5 +1,6 @@
 package com.labwork01.app.genre.service;
 
+import com.labwork01.app.book.model.Book;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.repository.GenreRepository;
 import com.labwork01.app.util.validation.ValidatorUtil;
@@ -42,6 +43,14 @@ public class GenreService {
         currentGenre.setName(name);
         validatorUtil.validate(currentGenre);
         return genreRepository.save(currentGenre);
+    }
+    @Transactional(readOnly = true)
+    public List<Book> findAllBooksWithGenre(Genre genre){
+        if(genre == null){
+            throw new IllegalArgumentException("Genre is null or empty");
+        }
+        return em.createQuery("SELECT b FROM Book b WHERE :genre MEMBER OF b.genres", Book.class)
+                .setParameter("genre", genre).getResultList();
     }
 
     @Transactional

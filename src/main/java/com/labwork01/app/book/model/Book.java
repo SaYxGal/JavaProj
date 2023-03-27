@@ -53,9 +53,6 @@ public class Book {
             genres = new ArrayList<>();
         }
         this.genres.add(genre);
-        if (!genre.getBooks().contains(this)) {
-            genre.getBooks().add(this);
-        }
     }
     public void removeGenre(Genre genre){
         if(genres != null){
