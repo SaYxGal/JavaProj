@@ -49,8 +49,7 @@ public class GenreService {
         if(genre == null){
             throw new IllegalArgumentException("Genre is null or empty");
         }
-        return em.createQuery("SELECT b FROM Book b WHERE :genre MEMBER OF b.genres", Book.class)
-                .setParameter("genre", genre).getResultList();
+        return genreRepository.getBooksWithGenre(genre);
     }
 
     @Transactional
