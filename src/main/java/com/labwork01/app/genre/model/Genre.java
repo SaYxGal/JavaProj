@@ -1,10 +1,7 @@
 package com.labwork01.app.genre.model;
 
-import com.labwork01.app.book.model.Book;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,13 +11,6 @@ public class Genre {
     private Long id;
     @Column(nullable = false)
     private String name;
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private List<Book> books = new ArrayList<>();
     public Long getId() {
         return id;
     }
