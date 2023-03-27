@@ -21,7 +21,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.h2database:h2:2.1.210'
 	implementation 'org.hibernate.validator:hibernate-validator'
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.5'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
