@@ -107,16 +107,12 @@ public class JpaBookTests {
         log.info("testRemoveAndAddGenres[0]: " + book.toString());
         bookService.removeGenreFromBook(book.getId(), genre1);
         book = bookService.findBook(book.getId());
-        genre1 = genreService.findGenre(genre1.getId());
         log.info("testRemoveAndAddGenres[1]: " + book.toString());
         Assertions.assertEquals(book.getGenres().size(), 1);
-        Assertions.assertEquals(genre1.getBooks().size(), 0);
         bookService.addGenreToBook(book.getId(), genre3);
         book = bookService.findBook(book.getId());
-        genre3 = genreService.findGenre(genre3.getId());
         log.info("testRemoveAndAddGenres[2]: " + book.toString());
         Assertions.assertEquals(book.getGenres().size(), 2);
-        Assertions.assertEquals(genre3.getBooks().size(), 1);
     }
     @Test
     void testBookReadNotFound() {

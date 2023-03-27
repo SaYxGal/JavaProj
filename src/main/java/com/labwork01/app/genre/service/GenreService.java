@@ -1,5 +1,6 @@
 package com.labwork01.app.genre.service;
 
+import com.labwork01.app.book.model.Book;
 import com.labwork01.app.genre.model.Genre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -47,6 +48,14 @@ public class GenreService {
         final Genre currentGenre = findGenre(id);
         currentGenre.setName(name);
         return em.merge(currentGenre);
+    }
+    @Transactional(readOnly = true)
+    public List<Book> findAllBooksWithGenre(Genre genre){
+        if(genre == null){
+            throw new IllegalArgumentException("Genre is null or empty");
+        }
+        return em.createQuery("SELECT b FROM Book b WHERE :genre MEMBER OF b.genres", Book.class)
+                .setParameter("genre", genre).getResultList();
     }
 
     @Transactional
