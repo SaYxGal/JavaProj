@@ -19,7 +19,7 @@ public class Genre {
         return books;
     }
 
-    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Book> books = new ArrayList<>();
     public Long getId() {
         return id;
