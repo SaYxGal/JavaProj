@@ -1,5 +1,6 @@
 package com.labwork01.app.book.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.labwork01.app.author.model.Author;
 import com.labwork01.app.book.model.Book;
 import com.labwork01.app.genre.model.Genre;
@@ -10,6 +11,7 @@ public class BookDto {
     private final long id;
     private final String name;
     private final String description;
+    @JsonIgnoreProperties("books")
     private final Author author;
     private final List<Genre> genres;
     public BookDto(Book book) {

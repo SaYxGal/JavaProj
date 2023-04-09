@@ -21,11 +21,6 @@ nodeSetup.dependsOn 'downloadNode'
 jar {
     from 'dist'
     into 'static'
-    final devHost = 'http://localhost:8080'
-    final prodHost = ''
-    filesMatching('index.html') {
-        filter { line -> line.replaceAll(devHost, prodHost) }
-    }
 }
 
 task downloadNode(type: Download) {

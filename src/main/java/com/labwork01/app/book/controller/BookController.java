@@ -35,7 +35,7 @@ public class BookController {
     @PostMapping
     public BookDto createBook(@RequestParam("name") String name,
                               @RequestParam("desc") String description,
-                              @RequestParam("author_id") Long authorId,
+                              @RequestParam("authorId") Long authorId,
                               @RequestParam(value="genreId[]") Long[] genresId) {
         List<Genre> genres = new ArrayList<>();
         for (Long id: genresId) {
@@ -49,15 +49,15 @@ public class BookController {
     public BookDto updateBook(@PathVariable Long id,
                               @RequestParam("name") String name,
                               @RequestParam("desc") String description,
-                              @RequestParam("author_id") Long authorId) {
+                              @RequestParam("authorId") Long authorId) {
         return new BookDto(bookService.updateBook(id, name, description, authorService.findAuthor(authorId)));
     }
-    @PostMapping("/{id}/genres/{genre_id}")
+    @PostMapping("/{id}/genres/{genreId}")
     public BookDto addGenre(@PathVariable Long id,
                               @PathVariable Long genreId) {
         return new BookDto(bookService.addGenreToBook(id, genreService.findGenre(genreId)));
     }
-    @PutMapping("/{id}/genres/{genre_id}")
+    @PutMapping("/{id}/genres/{genreId}")
     public BookDto removeGenre(@PathVariable Long id,
                                  @PathVariable Long genreId) {
         return new BookDto(bookService.removeGenreFromBook(id, genreService.findGenre(genreId)));

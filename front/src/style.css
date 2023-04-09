@@ -1,0 +1,85 @@
+.nav-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+}
+.nav-link:hover {
+    color: RGB(98, 73, 73);
+    text-decoration: underline;
+}
+
+.card .card-title a {
+    text-decoration: none;
+    color: black;
+}
+
+header .img-fluid {
+    width: 200px;
+}
+
+.card .card-title a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    background-color: RGB(98, 73, 73);
+}
+
+.btn:hover {
+    background-color: RGB(98, 33, 3);
+}
+
+.card .img-fluid {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+}
+.drop{
+    display: none;
+}
+@media (max-width: 768px) {
+    .main_card {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card-text{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .image_div{
+        height: 50%;
+    }
+    .drop{
+        display: block;
+    }
+    .genres{
+        display: none;
+    }
+    .book_main{
+        width:50vw;
+    }
+    .forum_page{
+        display: flex;
+        flex-direction: column;
+    }
+    .forum_img{
+        width: 100px!important;
+    }
+}
+@media (max-width: 900px) {
+    .div-with-button{
+        flex-direction: column!important;
+    }
+}
+.all_genres {
+    word-wrap: break-word;
+}
+.forum_img{
+    width: 10vw;
+}
+.card-image{
+    height: 170px;
+    width: 130px;
+    overflow: hidden;
+}

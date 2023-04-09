@@ -1,5 +1,6 @@
 package com.labwork01.app.author.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.labwork01.app.author.model.Author;
 import com.labwork01.app.book.model.Book;
 
@@ -10,6 +11,7 @@ public class AuthorDto {
     private final String name;
     private final String surname;
     private final String patronymic;
+    @JsonIgnoreProperties("author")
     private final List<Book> books;
     public AuthorDto(Author author){
         id = author.getId();
