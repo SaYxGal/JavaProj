@@ -15,10 +15,11 @@ function Router(props) {
 }
 
 export default function AppDev() {
+  const[searchValue, setSearchValue] = useState();
   const routes = [
     { index: true, element: <MainPage />},
     { path: '', element: <MainPage/>, label: 'Главная' },
-    { path: 'Books', element: <BooksPage/>, label: 'Книги' },
+    { path: 'Books', element: <BooksPage searchValue={searchValue} setSearchValue={setSearchValue}/>, label: 'Книги' },
     { path: 'Authors', element: <AuthorsPage/>, label: 'Авторы' },
     { path: 'Genres', element: <GenresPage/>, label: 'Жанры' },
     { path: 'Forum', element:<ForumPage/>, label: 'Форум'},
@@ -33,7 +34,7 @@ export default function AppDev() {
   function render(links) {
     return (
       <>
-        <Header links={links} single={routes[routes.length-2]} />
+        <Header links={links} single={routes[routes.length-2]} setSearchValue={setSearchValue} />
         <div className="container-fluid">
           <Outlet />
         </div>

@@ -4,6 +4,18 @@ export default class DataService {
         const response = await axios.get(dataUrlPrefix + url);
         return response.data.map(item => transformer(item));
     }
+    static async readFilteredByGenre(dataUrlPrefix, url, transformer, id){
+        const response = await axios.get(dataUrlPrefix + url + `?genreId=${id}`);
+        return response.data.map(item => transformer(item));
+    }
+    static async readFilteredByAuthor(dataUrlPrefix, url, transformer, id){
+        const response = await axios.get(dataUrlPrefix + url + `?authorId=${id}`);
+        return response.data.map(item => transformer(item));
+    }
+    static async readFilteredByName(dataUrlPrefix, url, transformer, name){
+        const response = await axios.get(dataUrlPrefix + url + `?name=${name}`);
+        return response.data.map(item => transformer(item));
+    }
     static async read(dataUrlPrefix, url, id, transformer) {
         const response = await axios.get(dataUrlPrefix + url + '/' + id);
         return transformer(response.data);

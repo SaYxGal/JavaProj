@@ -16,8 +16,8 @@ export default function Container(props) {
                     <a href="">{item.name}</a>
                   </h5>
                   <p className="card-text">{item.description}</p>
-                  <p className="card-text">Автор: {item.author.name + " " + item.author.surname}</p>
-                  <p className="card-text">Жанры: {item.genres.map(elem => elem.name).toString()}</p>
+                  <p className="card-text">Автор: {<a className="text-decoration-underline" role="button" onClick={()=>props.filterAuthor(item.author.id)}>{item.author.name + " " + item.author.surname}</a>}</p>
+                  <p className="card-text">Жанры: {item.genres.map(elem => <><a className="text-decoration-underline" role="button" key={elem.id} onClick={()=>props.filterGenre(elem.id)}>{elem.name.toString()}</a><span> </span></>)}</p>
                 </div>
                 <div className="d-flex justify-content-end">
                   <a

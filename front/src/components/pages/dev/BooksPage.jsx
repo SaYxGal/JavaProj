@@ -8,11 +8,14 @@ import DataService from "../../../services/DataService";
 import AuthorDto from "../../../modelsDTO/AuthorDto";
 import GenreDto from "../../../modelsDTO/GenreDto";
 import ModalBookGenre from "../../common/ModalBookGenre";
-export default function BooksPage() {
+import { useSearchParams } from "react-router-dom";
+export default function BooksPage(props) {
   const dataUrlPrefix = import.meta.env.VITE_API_URL;
   const booksUrl = "/books";
   const authorUrl = "/authors";
   const genresUrl = "/genres";
+  const [parames, setParames] = useSearchParams();
+  const isInitialMount = React.useRef(true);
   const [data, setData] = useState(new BookDto());
   const [books, setBooks] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -50,13 +53,43 @@ export default function BooksPage() {
     loadBooks();
     loadGenres();
   }, []);
+  useEffect(()=>{
+    loadBooks();
+  },[parames])
   useEffect(() =>{
     setCheckedStateModal(new Array(genres.length).fill(false))
   }, [genres])
+  useEffect(()=>{
+    if(isInitialMount.current){
+      isInitialMount.current = false;
+    }
+    else{
+      if(typeof props.searchValue !== 'undefined'){
+          setParames({name: props.searchValue});
+      }
+    }
+  },[props.searchValue])
   function loadBooks() {
-    DataService.readAll(dataUrlPrefix, booksUrl, bookTransformer).then((data) =>
-      setBooks(data)
-    );
+    if(parames.get('authorId') != null){
+      DataService.readFilteredByAuthor(dataUrlPrefix, booksUrl, bookTransformer, parames.get('authorId')).then((data)=>{
+        setBooks(data);
+      })
+    }
+    else if(parames.get('genreId') != null){
+      DataService.readFilteredByGenre(dataUrlPrefix, booksUrl, bookTransformer, parames.get('genreId')).then((data)=>{
+        setBooks(data);
+      });
+    }
+    else if(parames.get('name') != null){
+      DataService.readFilteredByName(dataUrlPrefix, booksUrl, bookTransformer, parames.get('name')).then((data)=>{
+        setBooks(data);
+      })
+    }
+    else{
+      DataService.readAll(dataUrlPrefix, booksUrl, bookTransformer).then((data) =>
+        setBooks(data)
+      );
+    }
   }
   function loadGenres(){
     DataService.readAll(dataUrlPrefix, genresUrl, genreTransformer).then((data) =>
@@ -161,6 +194,12 @@ export default function BooksPage() {
     stateModal.name="";
     stateModal.description="";
   }
+  function filterGenre(id){
+    setParames({genreId: id});
+  }
+  function filterAuthor(id){
+    setParames({authorId: id});
+  }
 
   return (
     <div className="flex-shrink-0" style={{backgroundColor : 'rgb(255,255,255)'}}>
@@ -197,6 +236,8 @@ export default function BooksPage() {
         <Container
             books={books}
             onRemove={handleRemove}
+            filterGenre={filterGenre}
+            filterAuthor={filterAuthor}
             onEdit={handleEdit}
             onUpdateGenre={handleUpdateGenre}/>
         </div>

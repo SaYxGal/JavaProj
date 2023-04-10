@@ -26,8 +26,10 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDto> getBooks() {
-        return bookService.findAllBooks().stream()
+    public List<BookDto> getBooks(@RequestParam(value = "authorId", required = false) Long authorId,
+                                  @RequestParam(value = "genreId",required = false) Long genreId,
+                                  @RequestParam(value = "name", required = false) String name) {
+        return bookService.findAllBooks(authorId, genreId, name).stream()
                 .map(BookDto::new)
                 .toList();
     }

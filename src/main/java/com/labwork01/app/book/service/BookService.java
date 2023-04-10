@@ -1,9 +1,11 @@
 package com.labwork01.app.book.service;
 
 import com.labwork01.app.author.model.Author;
+import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.model.Book;
 import com.labwork01.app.book.repository.BookRepository;
 import com.labwork01.app.genre.model.Genre;
+import com.labwork01.app.genre.service.GenreService;
 import com.labwork01.app.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +16,13 @@ import java.util.Optional;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
+    private final GenreService genreService;
+    private final AuthorService authorService;
     private final ValidatorUtil validatorUtil;
-    public BookService(BookRepository bookRepository, ValidatorUtil validatorUtil){
+    public BookService(BookRepository bookRepository,GenreService genreService, AuthorService authorService, ValidatorUtil validatorUtil){
         this.bookRepository = bookRepository;
+        this.genreService = genreService;
+        this.authorService = authorService;
         this.validatorUtil = validatorUtil;
     }
 
@@ -38,7 +44,18 @@ public class BookService {
     }
 
     @Transactional(readOnly = true)
-    public List<Book> findAllBooks() {
+    public List<Book> findAllBooks(Long authorId, Long genreId, String name) {
+        if(authorId != null){
+            Author author = authorService.findAuthor(authorId);
+            return bookRepository.getBooksByAuthor(author);
+        }
+        else if(genreId != null){
+            Genre genre = genreService.findGenre(genreId);
+            return bookRepository.getBooksByGenre(genre);
+        }
+        else if(name != null){
+            return bookRepository.getBooksByName("%" + name + "%");
+        }
         return bookRepository.findAll();
     }
 

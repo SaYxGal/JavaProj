@@ -122,7 +122,7 @@ public class JpaBookTests {
     @Test
     void testBookReadAllEmpty() {
         bookService.deleteAllBooks();
-        final List<Book> books = bookService.findAllBooks();
+        final List<Book> books = bookService.findAllBooks(null,null,null);
         log.info("testBookReadAllEmpty: " + books.toString());
         Assertions.assertEquals(books.size(), 0);
     }
