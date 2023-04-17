@@ -1,5 +1,6 @@
 package com.labwork01.app.book.controller;
 
+import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.service.BookService;
 import com.labwork01.app.genre.model.Genre;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping(WebConfiguration.REST_API +"/books")
 public class BookController {
     private final BookService bookService;
     private final AuthorService authorService;

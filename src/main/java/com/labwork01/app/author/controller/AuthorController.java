@@ -1,12 +1,13 @@
 package com.labwork01.app.author.controller;
 
+import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping(WebConfiguration.REST_API +"/authors")
 public class AuthorController {
     private final AuthorService authorService;
     public AuthorController(AuthorService authorService){

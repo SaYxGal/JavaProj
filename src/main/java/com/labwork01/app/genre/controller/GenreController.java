@@ -1,12 +1,13 @@
 package com.labwork01.app.genre.controller;
 
+import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.genre.service.GenreService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/genres")
+@RequestMapping(WebConfiguration.REST_API +"/genres")
 public class GenreController {
     private final GenreService genreService;
     public GenreController(GenreService genreService){
