@@ -1,7 +1,7 @@
 package com.labwork01.app.author.controller;
 
 import com.labwork01.app.author.model.Author;
-import com.labwork01.app.book.model.Book;
+import com.labwork01.app.book.controller.BookDtoWithoutAuthor;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ public class AuthorDtoFull {
     private final String name;
     private final String surname;
     private final String patronymic;
-    private final List<Book> books;
+    private final List<BookDtoWithoutAuthor> books;
     public AuthorDtoFull(Author author){
         id = author.getId();
         name = author.getName();
         surname = author.getSurname();
         patronymic = author.getPatronymic();
-        books = author.getBooks();
+        books = author.getBooks().stream().map(BookDtoWithoutAuthor::new).toList();
     }
     public long getId() {
         return id;
@@ -34,7 +34,7 @@ public class AuthorDtoFull {
         return patronymic;
     }
 
-    public List<Book> getBooks() {
+    public List<BookDtoWithoutAuthor> getBooks() {
         return books;
     }
 }
