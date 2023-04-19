@@ -2,6 +2,7 @@ package com.labwork01.app.genre.controller;
 
 import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.genre.service.GenreService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,14 +27,14 @@ public class GenreController {
     }
 
     @PostMapping
-    public GenreDto createGenre(@RequestParam("name") String name) {
-        return new GenreDto(genreService.addGenre(name));
+    public GenreDto createGenre(@RequestBody @Valid GenreDto genreDto) {
+        return new GenreDto(genreService.addGenre(genreDto.getName()));
     }
 
     @PutMapping("/{id}")
     public GenreDto updateGenre(@PathVariable Long id,
-                                    @RequestParam("name") String name) {
-        return new GenreDto(genreService.updateGenre(id, name));
+                                @RequestBody @Valid GenreDto genreDto) {
+        return new GenreDto(genreService.updateGenre(id, genreDto.getName()));
     }
 
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package com.labwork01.app.author.controller;
 
 import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,18 +27,14 @@ public class AuthorController {
     }
 
     @PostMapping
-    public AuthorDto createAuthor(@RequestParam("name") String name,
-                                  @RequestParam("surname") String surname,
-                                  @RequestParam("patronymic") String patronymic) {
-        return new AuthorDto(authorService.addAuthor(name, surname, patronymic));
+    public AuthorDto createAuthor(@RequestBody @Valid AuthorDto authorDto) {
+        return new AuthorDto(authorService.addAuthor(authorDto.getName(), authorDto.getSurname(), authorDto.getPatronymic()));
     }
 
     @PutMapping("/{id}")
     public AuthorDto updateAuthor(@PathVariable Long id,
-                                  @RequestParam("name") String name,
-                                  @RequestParam("surname") String surname,
-                                  @RequestParam("patronymic") String patronymic) {
-        return new AuthorDto(authorService.updateAuthor(id, name, surname, patronymic));
+                                  @RequestBody @Valid AuthorDto authorDto) {
+        return new AuthorDto(authorService.updateAuthor(id, authorDto.getName(), authorDto.getSurname(), authorDto.getPatronymic()));
     }
 
     @DeleteMapping("/{id}")

@@ -8,7 +8,8 @@ public class GenreDto {
     private long id;
     @NotBlank(message = "Name can't be null or empty")
     private String name;
-
+    public GenreDto() {
+    }
     public GenreDto(Genre genre) {
         this.id = genre.getId();
         this.name = genre.getName();
@@ -19,5 +20,11 @@ public class GenreDto {
     }
     public String getName() {
         return name;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }

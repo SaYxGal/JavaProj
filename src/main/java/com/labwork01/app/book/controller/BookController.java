@@ -3,8 +3,10 @@ package com.labwork01.app.book.controller;
 import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.service.BookService;
+import com.labwork01.app.genre.controller.GenreDto;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.service.GenreService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,24 +38,21 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestParam("name") String name,
-                              @RequestParam("desc") String description,
-                              @RequestParam("authorId") Long authorId,
-                              @RequestParam(value="genreId[]") Long[] genresId) {
+    public BookDto createBook(@RequestBody @Valid BookDto bookDto) {
         List<Genre> genres = new ArrayList<>();
-        for (Long id: genresId) {
-            genres.add(genreService.findGenre(id));
+        for (GenreDto obj: bookDto.getGenres()) {
+            genres.add(genreService.findGenre(obj.getId()));
         }
-        return new BookDto(bookService.addBook(name, description,
-                authorService.findAuthor(authorId), genres));
+
+        return new BookDto(bookService.addBook(bookDto.getName(), bookDto.getDescription(),
+                authorService.findAuthor(bookDto.getAuthor().getId()), genres));
     }
 
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id,
-                              @RequestParam("name") String name,
-                              @RequestParam("desc") String description,
-                              @RequestParam("authorId") Long authorId) {
-        return new BookDto(bookService.updateBook(id, name, description, authorService.findAuthor(authorId)));
+                              @RequestBody @Valid BookDto bookDto) {
+        return new BookDto(bookService.updateBook(id, bookDto.getName(), bookDto.getDescription(),
+                authorService.findAuthor(bookDto.getAuthor().getId())));
     }
     @PostMapping("/{id}/genres/{genreId}")
     public BookDto addGenre(@PathVariable Long id,

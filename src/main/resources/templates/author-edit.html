@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+  <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+  <form action="#" th:action="@{/authors/{id}(id=*{id})}" th:object="${authorDto}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Имя</label>
+      <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Имя" required="true">
+    </div>
+    <div class="mb-3">
+      <label for="surname" class="form-label">Фамилия</label>
+      <input type="text" class="form-control" id="surname" name="surname" th:field="*{surname}" placeholder="Фамилия" required="true">
+    </div>
+    <div class="mb-3">
+      <label for="patronymic" class="form-label">Отчество</label>
+      <input type="text" class="form-control" id="patronymic" name="patronymic" th:field="*{patronymic}" placeholder="Отчество">
+    </div>
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary button-fixed">
+        <span th:if="${id == null}">Добавить</span>
+        <span th:if="${id != null}">Обновить</span>
+      </button>
+      <a class="btn btn-secondary button-fixed" th:href="@{/authors}">
+        Назад
+      </a>
+    </div>
+  </form>
+</div>
+</body>
+</html>
