@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+>
+<head>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="flex-shrink-0" style="background-color: RGB(255, 255, 255)">
+      <div class="row justify-content-center">
+        <div class="col-3 genres" style="background-color: rgb(211,211,211); min-height: 68vh">
+          <div class="d-flex flex-row justify-content-between div-with-button">
+            <h2>Список жанров</h2>
+            <a class="btn btn-success button-fixed"
+               th:href="@{/books/edit}">
+              <i class="fa fa-pencil" aria-hidden="true"></i> Добавить
+            </a>
+          </div>
+          <div class="all_genres">
+            <ul id="list-genres">
+              <li th:each="genre: ${genres}">
+                <a href="#" th:text="${genre.name}"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <h2>Книги</h2>
+          <div class="container p-4 row" th:each="book: ${books}" id="books-list">
+            <div
+                    class="card book_card mb-3 me-3"
+                    style="max-width: 540px"
+            >
+            <div class="row g-0 book_item d-flex">
+              <div class="col-md-8 d-flex flex-column card_text_div">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="" th:text="${book.name}"></a>
+                  </h5>
+                  <p class="card-text" th:text="${book.description}"></p>
+                  <p class="card-text">
+                    <span>Автор:</span>
+                    <a class="text-decoration-underline" th:text="${book.author.surname} + ' ' + ${book.author.name}" role="button"></a>
+                  </p>
+                  <span>Жанры:</span>
+                  <div class="card-text" th:each="value: ${book.genres}">
+                    <a class="text-decoration-underline" role="button" th:text="${value.name}"></a>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <a
+                          class="text-end align-self-end"
+                          th:href="@{/books/delete/{id}(id=${book.id})}"
+                    >
+                    Удалить
+                  </a>
+                  <a
+                          class="px-2 text-end align-self-end"
+                          th:href="@{/books/edit/{id}(id=${book.id})}"
+                    >
+                    Изменить
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

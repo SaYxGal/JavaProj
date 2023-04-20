@@ -1,5 +1,6 @@
 package com.labwork01.app.book.controller;
 
+import com.labwork01.app.author.controller.AuthorDto;
 import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.service.BookService;
 import com.labwork01.app.genre.controller.GenreDto;
@@ -38,6 +39,7 @@ public class BookMvcController {
                 bookService.findAllBooks(authorId, genreId, name).stream()
                         .map(BookDto::new)
                         .toList());
+        model.addAttribute("genres", genreService.findAllGenres());
         return "book";
     }
     @GetMapping(value = {"/edit", "/edit/{id}"})
@@ -45,29 +47,46 @@ public class BookMvcController {
                              Model model) {
         if (id == null || id <= 0) {
             model.addAttribute("bookDto", new BookDto());
+            model.addAttribute("selectedAuthor", null);
         } else {
-            model.addAttribute("bookId", id);
-            model.addAttribute("bookDto", new BookDto(bookService.findBook(id)));
+            BookDto book = new BookDto(bookService.findBook(id));
+            model.addAttribute("selectedAuthor", book.getAuthor());
+            model.addAttribute("bookDto", book);
         }
+        model.addAttribute("authors", authorService.findAllAuthors().stream().map(AuthorDto::new).toList());
+        model.addAttribute("genres", genreService.findAllGenres().stream().map(GenreDto::new).toList());
         return "book-edit";
     }
     @PostMapping(value = {"", "/{id}"})
     public String saveBook(@PathVariable(required = false) Long id,
-                             @ModelAttribute("bookDto") @Valid BookDto bookDto,
+                             @ModelAttribute("bookDto") @Valid BookDto book,
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "book-edit";
         }
+        List<Genre> genres = new ArrayList<>();
+        for (GenreDto obj: book.getGenres()) {
+            genres.add(genreService.findGenre(obj.getId()));
+        }
         if (id == null || id <= 0) {
-            List<Genre> genres = new ArrayList<>();
-            for (GenreDto obj: bookDto.getGenres()) {
-                genres.add(genreService.findGenre(obj.getId()));
+            bookService.addBook(book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthor().getId()),genres);
+        }
+        else {
+            bookService.updateBook(id, book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthor().getId()));
+            List<Genre> currentGenres = bookService.findBook(id).getGenres();
+            for(int i = 0; i < genres.size(); i++){
+                if(!currentGenres.contains(genres.get(i))){
+                    bookService.addGenreToBook(id, genres.get(i));
+                }
             }
-            bookService.addBook(bookDto.getName(), bookDto.getDescription(), authorService.findAuthor(bookDto.getAuthor().getId()),genres);
-        } else {
-            bookService.updateBook(id, bookDto.getName(), bookDto.getDescription(), authorService.findAuthor(bookDto.getAuthor().getId()));
+            currentGenres = bookService.findBook(id).getGenres();
+            for(int i = 0; i < currentGenres.size(); i++){
+                if(!genres.contains(currentGenres.get(i))){
+                    bookService.removeGenreFromBook(id, currentGenres.get(i));
+                }
+            }
         }
         return "redirect:/books";
     }

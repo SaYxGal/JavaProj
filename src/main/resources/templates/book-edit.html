@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+>
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/books/{id}(id=*{id})}" th:object="${bookDto}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Название</label>
+            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Название" required="true">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <textarea class="form-control" id="description" name="description" th:field="*{description}" required="true"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Автор</label>
+            <select id="author" class="form-select" th:field="*{author}" th:name="${selectedAuthor}">
+                <option th:each="value: ${authors}" th:selected="${selectedAuthor != null and selectedAuthor.id == value.id}" th:value="${value}" th:text="${value.surname} + ' ' + ${value.name}"></option>
+            </select>
+        </div>
+        <p class="d-flex justify-content-between">
+            <label>Жанры:
+                <input type="checkbox" name="genres"
+                       th:each="genre : ${genres}"
+                       th:text="${genre.name}"
+                       th:value="${genre}"
+                       th:field="*{genres}"
+                />
+            </label>
+        </p>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary button-fixed">
+                <span th:if="${id == null}">Добавить</span>
+                <span th:if="${id != null}">Обновить</span>
+            </button>
+            <a class="btn btn-secondary button-fixed" th:href="@{/books}">
+                Назад
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
