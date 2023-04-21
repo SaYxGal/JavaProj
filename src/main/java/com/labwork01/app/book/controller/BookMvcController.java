@@ -46,11 +46,11 @@ public class BookMvcController {
     public String editBook(@PathVariable(required = false) Long id,
                              Model model) {
         if (id == null || id <= 0) {
-            model.addAttribute("bookDto", new BookDto());
+            model.addAttribute("bookDto", new BookDtoForTL());
             model.addAttribute("selectedAuthor", null);
         } else {
-            BookDto book = new BookDto(bookService.findBook(id));
-            model.addAttribute("selectedAuthor", book.getAuthor());
+            BookDtoForTL book = new BookDtoForTL(bookService.findBook(id));
+            model.addAttribute("selectedAuthor", book.getAuthorId());
             model.addAttribute("bookDto", book);
         }
         model.addAttribute("authors", authorService.findAllAuthors().stream().map(AuthorDto::new).toList());
@@ -59,7 +59,7 @@ public class BookMvcController {
     }
     @PostMapping(value = {"", "/{id}"})
     public String saveBook(@PathVariable(required = false) Long id,
-                             @ModelAttribute("bookDto") @Valid BookDto book,
+                             @ModelAttribute("bookDto") @Valid BookDtoForTL book,
                              BindingResult bindingResult,
                              Model model) {
         if (bindingResult.hasErrors()) {
@@ -67,14 +67,14 @@ public class BookMvcController {
             return "book-edit";
         }
         List<Genre> genres = new ArrayList<>();
-        for (GenreDto obj: book.getGenres()) {
-            genres.add(genreService.findGenre(obj.getId()));
+        for (Long obj: book.getGenresId()) {
+            genres.add(genreService.findGenre(obj));
         }
         if (id == null || id <= 0) {
-            bookService.addBook(book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthor().getId()),genres);
+            bookService.addBook(book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthorId()),genres);
         }
         else {
-            bookService.updateBook(id, book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthor().getId()));
+            bookService.updateBook(id, book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthorId()));
             List<Genre> currentGenres = bookService.findBook(id).getGenres();
             for(int i = 0; i < genres.size(); i++){
                 if(!currentGenres.contains(genres.get(i))){
