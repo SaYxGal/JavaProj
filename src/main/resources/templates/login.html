@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+>
+<head>
+</head>
+<body>
+  <div layout:fragment="content">
+    <form class="w-50 ms-2 needs-validation"novalidate>
+      <h2 class="py-3">Вход</h2>
+      <h4>Логин</h4>
+      <input class="form-control my-2" type="email" required />
+      <div class="invalid-feedback">
+        Пожалуйста введите электронную почту вида: "..@.."
+      </div>
+      <h4>Пароль</h4>
+      <input class="form-control my-2" type="password" required />
+      <div>
+        <button class="btn btn-primary m-2" type="submit">Войти</button>
+        <a href="" style="margin-top: 1em; margin-left: 1em"
+        >Зарегистрируйтесь, если нет аккаунта, здесь</a
+        >
+      </div>
+    </form>
+  </div>
+  <th:block layout:fragment="scripts">
+    <script src="js/formValid.js"></script>
+  </th:block>
+</body>
+</html>

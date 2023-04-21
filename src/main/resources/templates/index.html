@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{default}">
+>
+<head>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div id="banner" class="p-4 d-flex justify-content-center">
+      <img src="image_image_1199445.png" class="hide img-fluid" />
+      <img src="image.png" class="hide img-fluid" />
+    </div>
+    <h2 class="p-4">Новинки библиотеки</h2>
+    <div class="container p-4">
+      <div class="main_card row d-flex">
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="25756536-author-suhinin_vladimir-kniga_peshka_v_bolshoyi_igre.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">В.Сухинин "Пешка в большой игре"</a>
+              </h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="68221607-author-demina_karina-kniga_nastavnik.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title"><a href="#">К.Демина "Наставник"</a></h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="129095-author-bulgakov_mihail-kniga_master_i_margarita.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">М.Булгаков "Мастер и Маргарита"</a>
+              </h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="p-4">Самое популярное</h2>
+    <div class="container p-4">
+      <div class="row main_card">
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="25756536-author-suhinin_vladimir-kniga_peshka_v_bolshoyi_igre.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">В.Сухинин "Пешка в большой игре"</a>
+              </h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="68221607-author-demina_karina-kniga_nastavnik.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title"><a href="#">К.Демина "Наставник"</a></h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3 book_main">
+          <div class="card">
+            <img
+                    class="img-fluid"
+                    src="129095-author-bulgakov_mihail-kniga_master_i_margarita.jpg"
+            />
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">М.Булгаков "Мастер и Маргарита"</a>
+              </h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/banner.js}"></script>
+  </th:block>
+</body>
+</html>
