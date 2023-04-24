@@ -47,6 +47,9 @@ public class Book {
     public List<Genre> getGenres() {
         return genres;
     }
+    public void setGenres(List<Genre> genres){
+        this.genres = genres;
+    }
 
     public void addGenre(Genre genre) {
         if (genres == null){

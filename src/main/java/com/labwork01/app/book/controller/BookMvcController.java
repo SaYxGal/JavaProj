@@ -74,19 +74,7 @@ public class BookMvcController {
             bookService.addBook(book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthorId()),genres);
         }
         else {
-            bookService.updateBook(id, book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthorId()));
-            List<Genre> currentGenres = bookService.findBook(id).getGenres();
-            for(int i = 0; i < genres.size(); i++){
-                if(!currentGenres.contains(genres.get(i))){
-                    bookService.addGenreToBook(id, genres.get(i));
-                }
-            }
-            currentGenres = bookService.findBook(id).getGenres();
-            for(int i = 0; i < currentGenres.size(); i++){
-                if(!genres.contains(currentGenres.get(i))){
-                    bookService.removeGenreFromBook(id, currentGenres.get(i));
-                }
-            }
+            bookService.updateBookFull(id, book.getName(), book.getDescription(), authorService.findAuthor(book.getAuthorId()), genres);
         }
         return "redirect:/books";
     }

@@ -69,6 +69,15 @@ public class BookService {
         return bookRepository.save(currentBook);
     }
     @Transactional
+    public Book updateBookFull(Long id, String name, String description, Author author, List<Genre> genres){
+        final Book currentBook = findBook(id);
+        currentBook.setName(name);
+        currentBook.setDescription(description);
+        currentBook.setAuthor(author);
+        currentBook.setGenres(genres);
+        return bookRepository.save(currentBook);
+    }
+    @Transactional
     public Book addGenreToBook(Long id, Genre genre){
         final Book currentBook = findBook(id);
         validatorUtil.validate(genre);
