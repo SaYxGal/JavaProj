@@ -106,6 +106,7 @@ export default function BooksPage(props) {
         loadBooks()
       );
     }
+    setGenresId([]);
   }
 
   function handleAdd() {
