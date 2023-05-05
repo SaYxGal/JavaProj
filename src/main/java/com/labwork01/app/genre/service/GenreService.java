@@ -3,7 +3,12 @@ package com.labwork01.app.genre.service;
 import com.labwork01.app.book.model.Book;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.repository.GenreRepository;
+import com.labwork01.app.user.model.User;
+import com.labwork01.app.user.model.UserRole;
+import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidatorUtil;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +18,25 @@ import java.util.Optional;
 @Service
 public class GenreService {
     private final GenreRepository genreRepository;
+    private final UserService userService;
     private final ValidatorUtil validatorUtil;
-    public GenreService(GenreRepository genreRepository, ValidatorUtil validatorUtil){
+    public GenreService(GenreRepository genreRepository, UserService userService, ValidatorUtil validatorUtil){
         this.genreRepository = genreRepository;
+        this.userService = userService;
         this.validatorUtil = validatorUtil;
     }
 
     @Transactional
     public Genre addGenre(String name) {
         final Genre genre = new Genre(name);
+        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(currentUser instanceof UserDetails){
+            String username = ((UserDetails)currentUser).getUsername();
+            User user = userService.findByLogin(username);
+            if(user.getRole() == UserRole.ADMIN){
+                genre.setUser(user);
+            }
+        }
         validatorUtil.validate(genre);
         return genreRepository.save(genre);
     }

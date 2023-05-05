@@ -2,13 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{default}">
 <head>
 </head>
 <body>
 <div layout:fragment="content">
     <div>
-        <a class="btn btn-success button-fixed"
+        <a sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="btn btn-success button-fixed"
            th:href="@{/authors/edit}">
             <i class="fa-solid fa-plus"></i> Добавить
         </a>
@@ -30,11 +31,11 @@
                 <td th:text="${author.name} + ' ' + ${author.surname} + ' ' + ${author.patronymic}" style="width: 60%"></td>
                 <td style="width: 10%">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-warning button-fixed button-sm"
+                        <a sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="btn btn-warning button-fixed button-sm"
                            th:href="@{/authors/edit/{id}(id=${author.id})}">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
                         </a>
-                        <button type="button" class="btn btn-danger button-fixed button-sm"
+                        <button sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" type="button" class="btn btn-danger button-fixed button-sm"
                                 th:attr="onclick=|confirm('Удалить запись?') && document.getElementById('remove-${author.id}').click()|">
                             <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                         </button>

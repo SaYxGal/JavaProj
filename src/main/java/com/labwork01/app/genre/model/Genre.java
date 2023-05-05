@@ -1,5 +1,6 @@
 package com.labwork01.app.genre.model;
 
+import com.labwork01.app.user.model.User;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -11,6 +12,9 @@ public class Genre {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @ManyToOne
+    @JoinColumn(name= "user_id", nullable = false)
+    private User user;
     public Long getId() {
         return id;
     }
@@ -22,6 +26,12 @@ public class Genre {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
     public Genre() {
     }
@@ -44,6 +54,7 @@ public class Genre {
     public String toString() {
         return "Genre{" +
                 "id=" + id +
-                ", name='" + name + '\'' + '}';
+                ", name='" + name + '\'' +
+                ", user='" + user.toString() + '\'' + '}';
     }
 }
