@@ -27,6 +27,9 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

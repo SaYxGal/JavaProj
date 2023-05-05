@@ -1,8 +1,8 @@
 package com.labwork01.app.book.controller;
 
-import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
 import com.labwork01.app.book.service.BookService;
+import com.labwork01.app.configuration.WebConfiguration;
 import com.labwork01.app.genre.controller.GenreDto;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.service.GenreService;

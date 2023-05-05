@@ -1,7 +1,7 @@
 package com.labwork01.app.author.controller;
 
-import com.labwork01.app.WebConfiguration;
 import com.labwork01.app.author.service.AuthorService;
+import com.labwork01.app.configuration.WebConfiguration;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.labwork01.app;
+package com.labwork01.app.configuration;
 
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -23,6 +23,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         ViewControllerRegistration registration = registry.addViewController("/notFound");
         registration.setViewName("forward:/index.html");
         registration.setStatusCode(HttpStatus.OK);
+        registry.addViewController("login");
 
         // Alternative way (404 error hits the console):
         // > registry.addViewController("/notFound").setViewName("forward:/index.html");

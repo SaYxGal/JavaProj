@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8"/>
   <title>Онлайн-библиотека</title>
@@ -58,6 +59,15 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/forum">Форум</a>
+                  </li>
+                  <li class="nav-item">
+                    <a sec:authorize="isAuthenticated() and hasRole('ROLE_ADMIN')" class="nav-link" href="/users"
+                       th:classappend="${#strings.equals(activeLink, '/users')} ? 'active' : ''">Пользователи</a>
+                  </li>
+                  <li class="nav-item">
+                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/logout">
+                      Выход (<span th:text="${#authentication.name}"></span>)
+                    </a>
                   </li>
                 </ul>
               </div>

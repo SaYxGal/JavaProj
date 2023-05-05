@@ -1,6 +1,6 @@
 package com.labwork01.app.genre.controller;
 
-import com.labwork01.app.WebConfiguration;
+import com.labwork01.app.configuration.WebConfiguration;
 import com.labwork01.app.genre.service.GenreService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

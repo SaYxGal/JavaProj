@@ -8,25 +8,27 @@
 </head>
 <body>
   <div layout:fragment="content">
-    <form class="w-50 ms-2 needs-validation"novalidate>
+    <div th:if="${param.error}" class="alert alert-danger margin-bottom">
+      Пользователь не найден или пароль указан не верно
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success margin-bottom">
+      Выход успешно произведен
+    </div>
+    <div th:if="${param.created}" class="alert alert-success margin-bottom">
+      Пользователь '<span th:text="${param.created}"></span>' успешно создан
+    </div>
+    <form th:action="@{/login}" method="post" class="w-50 ms-2">
       <h2 class="py-3">Вход</h2>
       <h4>Логин</h4>
-      <input class="form-control my-2" type="email" required />
-      <div class="invalid-feedback">
-        Пожалуйста введите электронную почту вида: "..@.."
-      </div>
+      <input class="form-control my-2" name="username" id="username" type="text" placeholder="Логин" required="true" autofocus="true"/>
       <h4>Пароль</h4>
-      <input class="form-control my-2" type="password" required />
+      <input class="form-control my-2" name="password" id="password" type="password" placeholder="Пароль" required="true" />
       <div>
         <button class="btn btn-primary m-2" type="submit">Войти</button>
-        <a href="" style="margin-top: 1em; margin-left: 1em"
-        >Зарегистрируйтесь, если нет аккаунта, здесь</a
-        >
+        <a href="/signup" style="margin-top: 1em; margin-left: 1em"
+        >Зарегистрируйтесь, если нет аккаунта, здесь</a>
       </div>
     </form>
   </div>
-  <th:block layout:fragment="scripts">
-    <script src="js/formValid.js"></script>
-  </th:block>
 </body>
 </html>
