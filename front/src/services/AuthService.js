@@ -17,6 +17,7 @@ const login = (username, password) => {
       if(response.status === 200){
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("login", response.data.login);
       }
     });
 };
@@ -24,6 +25,7 @@ const login = (username, password) => {
 const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
+  localStorage.removeItem("login");
 };
 const AuthService = {
     register,

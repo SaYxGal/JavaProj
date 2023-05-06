@@ -38,13 +38,14 @@ public class BookController {
     public BookDto createBook(@RequestParam("name") String name,
                               @RequestParam("desc") String description,
                               @RequestParam("authorId") Long authorId,
+                              @RequestParam("login") String userName,
                               @RequestParam(value="genreId[]") Long[] genresId) {
         List<Genre> genres = new ArrayList<>();
         for (Long id: genresId) {
             genres.add(genreService.findGenre(id));
         }
         return new BookDto(bookService.addBook(name, description,
-                authorService.findAuthor(authorId), genres));
+                authorService.findAuthor(authorId), genres, userName));
     }
 
     @PutMapping("/{id}")

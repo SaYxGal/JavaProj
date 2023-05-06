@@ -37,7 +37,7 @@ export default class DataService {
             "Content-Type": "application/json"
         };
         const response = await axios.post(dataUrlPrefix + url + `?name=${data.name}&desc=${data.description}
-        &authorId=${data.author}` + genres, JSON.stringify(data), headers);
+        &authorId=${data.author}&login=${localStorage.getItem("login")}` + genres, JSON.stringify(data), headers);
         return true;
     }
     static async createAuthor(dataUrlPrefix, url, data){
@@ -45,14 +45,14 @@ export default class DataService {
             "Content-Type": "application/json"
         };
         const response = await axios.post(dataUrlPrefix + url + `?name=${data.name}&surname=${data.surname}
-        &patronymic=${data.patronymic}`, JSON.stringify(data), headers);
+        &patronymic=${data.patronymic}&login=${localStorage.getItem("login")}`, JSON.stringify(data), headers);
         return true;
     }
     static async createGenre(dataUrlPrefix, url, data){
         const headers = { 
             "Content-Type": "application/json"
         };
-        const response = await axios.post(dataUrlPrefix + url + `?name=${data.name}`, JSON.stringify(data), headers);
+        const response = await axios.post(dataUrlPrefix + url + `?name=${data.name}&login=${localStorage.getItem("login")}`, JSON.stringify(data), headers);
         return true;
     }
 

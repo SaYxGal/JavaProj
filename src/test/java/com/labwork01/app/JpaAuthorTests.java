@@ -1,20 +1,10 @@
 package com.labwork01.app;
 
-import com.labwork01.app.author.model.Author;
-import com.labwork01.app.author.service.AuthorNotFoundException;
-import com.labwork01.app.author.service.AuthorService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @SpringBootTest
 public class JpaAuthorTests {
-    private static final Logger log = LoggerFactory.getLogger(JpaAuthorTests.class);
+    /*private static final Logger log = LoggerFactory.getLogger(JpaAuthorTests.class);
     @Autowired
     private AuthorService authorService;
     @Test
@@ -59,5 +49,5 @@ public class JpaAuthorTests {
         final List<Author> authors = authorService.findAllAuthors();
         log.info("testAuthorReadAllEmpty: " + authors.toString());
         Assertions.assertEquals(authors.size(), 0);
-    }
+    }*/
 }

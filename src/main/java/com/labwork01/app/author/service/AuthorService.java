@@ -6,8 +6,6 @@ import com.labwork01.app.user.model.User;
 import com.labwork01.app.user.model.UserRole;
 import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidatorUtil;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,15 +24,11 @@ public class AuthorService {
     }
 
     @Transactional
-    public Author addAuthor(String name, String surname, String patronymic) {
+    public Author addAuthor(String name, String surname, String patronymic, String userName) {
         final Author author = new Author(name,surname,patronymic);
-        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(currentUser instanceof UserDetails){
-            String username = ((UserDetails)currentUser).getUsername();
-            User user = userService.findByLogin(username);
-            if(user.getRole() == UserRole.ADMIN){
-                author.setUser(user);
-            }
+        User user = userService.findByLogin(userName);
+        if(user.getRole() == UserRole.ADMIN){
+            author.setUser(user);
         }
         validatorUtil.validate(author);
         return authorRepository.save(author);

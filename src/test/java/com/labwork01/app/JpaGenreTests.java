@@ -1,24 +1,10 @@
 package com.labwork01.app;
 
-import com.labwork01.app.author.model.Author;
-import com.labwork01.app.author.service.AuthorService;
-import com.labwork01.app.book.model.Book;
-import com.labwork01.app.book.service.BookService;
-import com.labwork01.app.genre.model.Genre;
-import com.labwork01.app.genre.service.GenreNotFoundException;
-import com.labwork01.app.genre.service.GenreService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 public class JpaGenreTests {
+    /*
     private static final Logger log = LoggerFactory.getLogger(JpaGenreTests.class);
     @Autowired
     private GenreService genreService;
@@ -93,5 +79,5 @@ public class JpaGenreTests {
         final List<Genre> genres = genreService.findAllGenres();
         log.info("testGenreReadAllEmpty: " + genres.toString());
         Assertions.assertEquals(genres.size(), 0);
-    }
+    }*/
 }

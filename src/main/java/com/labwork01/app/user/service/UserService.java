@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
         if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
             throw new UserNotFoundException(user.getLogin());
         }
-        return new UserInfoDto(jwtProvider.generateToken(user.getLogin()), user.getRole());
+        return new UserInfoDto(jwtProvider.generateToken(user.getLogin()), user.getLogin(), user.getRole());
     }
 
     public UserDetails loadUserByToken(String token) throws UsernameNotFoundException {

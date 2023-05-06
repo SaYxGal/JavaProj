@@ -25,8 +25,8 @@ public class GenreController {
     }
 
     @PostMapping
-    public GenreDto createGenre(@RequestParam("name") String name) {
-        return new GenreDto(genreService.addGenre(name));
+    public GenreDto createGenre(@RequestParam("name") String name, @RequestParam("login") String userName) {
+        return new GenreDto(genreService.addGenre(name, userName));
     }
 
     @PutMapping("/{id}")

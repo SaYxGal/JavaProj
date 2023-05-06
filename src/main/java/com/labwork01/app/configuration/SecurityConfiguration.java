@@ -71,6 +71,8 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
                 .requestMatchers("/*.js")
+                .requestMatchers("/*.png")
+                .requestMatchers("/*.jpg")
                 .requestMatchers("/*.html")
                 .requestMatchers("/*.css")
                 .requestMatchers("/assets/**")
@@ -79,6 +81,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/swagger-ui/index.html")
                 .requestMatchers("/webjars/**")
                 .requestMatchers("/swagger-resources/**")
-                .requestMatchers("/v3/api-docs/**");
+                .requestMatchers("/v3/api-docs/**")
+                .requestMatchers("/h2-console/**");
     }
 }

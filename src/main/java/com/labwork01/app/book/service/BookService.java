@@ -10,8 +10,6 @@ import com.labwork01.app.user.model.User;
 import com.labwork01.app.user.model.UserRole;
 import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidatorUtil;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,19 +32,15 @@ public class BookService {
     }
 
     @Transactional
-    public Book addBook(String name, String description, Author author, List<Genre> genres) {
+    public Book addBook(String name, String description, Author author, List<Genre> genres, String userName) {
         final Book book = new Book(name, description);
         book.setAuthor(author);
         for (Genre genre: genres) {
             book.addGenre(genre);
         }
-        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(currentUser instanceof UserDetails){
-            String username = ((UserDetails)currentUser).getUsername();
-            User user = userService.findByLogin(username);
-            if(user.getRole() == UserRole.ADMIN){
-                book.setUser(user);
-            }
+        User user = userService.findByLogin(userName);
+        if(user.getRole() == UserRole.ADMIN){
+            book.setUser(user);
         }
         validatorUtil.validate(book);
         return bookRepository.save(book);

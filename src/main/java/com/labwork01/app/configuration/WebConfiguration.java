@@ -6,7 +6,10 @@ import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerF
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 class WebConfiguration implements WebMvcConfigurer {
@@ -30,17 +33,5 @@ class WebConfiguration implements WebMvcConfigurer {
         return container -> {
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notFound"));
         };
-    }
-    @Override
-    public void addResourceHandlers(
-            ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/public/**")
-                .addResourceLocations("/WEB-INF/view/react/build/public/");
-        registry.addResourceHandler("/*.js")
-                .addResourceLocations("/WEB-INF/view/react/build/");
-        registry.addResourceHandler("/*.json")
-                .addResourceLocations("/WEB-INF/view/react/build/");
-        registry.addResourceHandler("/*.ico")
-                .addResourceLocations("/WEB-INF/view/react/build/");
     }
 }

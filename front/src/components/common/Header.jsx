@@ -74,9 +74,11 @@ export default function Header(props) {
             </nav>
           </div>
           <span className="col text-end">
-            <Link className="nav-link" onClick={handleLogout} to={""}>
-              Выход
-            </Link>
+            {typeof localStorage.getItem("role") === 'string' &&
+              <Link className="nav-link" onClick={handleLogout} to={""}>
+              {"Выход(" + localStorage.getItem("login") + ")"}
+              </Link>
+            }
           </span>
         </div>
       </div>

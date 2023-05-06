@@ -27,8 +27,9 @@ public class AuthorController {
     @PostMapping
     public AuthorDto createAuthor(@RequestParam("name") String name,
                                   @RequestParam("surname") String surname,
-                                  @RequestParam("patronymic") String patronymic) {
-        return new AuthorDto(authorService.addAuthor(name, surname, patronymic));
+                                  @RequestParam("patronymic") String patronymic,
+                                  @RequestParam("login") String userName) {
+        return new AuthorDto(authorService.addAuthor(name, surname, patronymic, userName));
     }
 
     @PutMapping("/{id}")

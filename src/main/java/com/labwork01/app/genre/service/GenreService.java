@@ -7,8 +7,6 @@ import com.labwork01.app.user.model.User;
 import com.labwork01.app.user.model.UserRole;
 import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidatorUtil;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,15 +25,11 @@ public class GenreService {
     }
 
     @Transactional
-    public Genre addGenre(String name) {
+    public Genre addGenre(String name, String userName) {
         final Genre genre = new Genre(name);
-        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(currentUser instanceof UserDetails){
-            String username = ((UserDetails)currentUser).getUsername();
-            User user = userService.findByLogin(username);
-            if(user.getRole() == UserRole.ADMIN){
-                genre.setUser(user);
-            }
+        User user = userService.findByLogin(userName);
+        if(user.getRole() == UserRole.ADMIN){
+            genre.setUser(user);
         }
         validatorUtil.validate(genre);
         return genreRepository.save(genre);
