@@ -7,8 +7,12 @@ import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidationException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.util.Pair;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.IntStream;
 
 
 @RestController
@@ -24,12 +28,17 @@ public class UserController {
     }
     @GetMapping(OpenAPI30Configuration.API_PREFIX + URL_MAIN)
     @Secured({UserRole.AsString.ADMIN})
-    public Page<UserDto> getUsers(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "5") int size){
-        return userService.findAllPages(page, size).map(UserDto::new);
+    public Pair<Page<UserDto>, List<Integer>> getUsers(@RequestParam(defaultValue = "1") int page,
+                                                       @RequestParam(defaultValue = "5") int size){
+        final Page<UserDto> users = userService.findAllPages(page, size).map(UserDto::new);
+        final int totalPages = users.getTotalPages();
+        final List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                .boxed()
+                .toList();
+        return Pair.of(users, pageNumbers);
     }
     @PostMapping(URL_LOGIN)
-    public String login(@RequestBody @Valid UserLoginDto userLoginDto) {
+    public UserInfoDto login(@RequestBody @Valid UserLoginDto userLoginDto) {
         return userService.loginAndGetToken(userLoginDto);
     }
     @PostMapping(URL_SIGNUP)

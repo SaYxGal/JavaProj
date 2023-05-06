@@ -12,6 +12,7 @@ import GenresPage from './components/pages/dev/GenresPage';
 import ForumPage from './components/pages/ForumPage'
 import SignUpPage from './components/pages/SignUpPage';
 import PrivateRoutes from './utils/PrivateRoutes';
+import UsersPage from './components/pages/dev/UsersPage';
 export default function AppDev() {
   const[searchValue, setSearchValue] = useState();
   const routes = [
@@ -19,7 +20,8 @@ export default function AppDev() {
     { path: '/Books', label: "Книги" },
     { path: '/Authors', label: "Авторы" },
     { path: '/Genres', label: "Жанры" },
-    { path: '/Forum', label: 'Форум'}
+    { path: '/Forum', label: 'Форум'},
+    { path: '/Users', label: 'Пользователи'}
   ];
   return (
     <>
@@ -27,7 +29,7 @@ export default function AppDev() {
         <Header links={routes} setSearchValue={setSearchValue} />
         <div>
             <Routes>
-              <Route element={<PrivateRoutes/>}>
+              <Route element={<PrivateRoutes role={"USER"}/>}>
                 <Route element={<MainPage/>} path="/" exact />
                 <Route element={<MainPage />} path="*" />
                 <Route element={<BooksPage searchValue={searchValue} setSearchValue={setSearchValue}/>} path="/Books"/>
@@ -35,6 +37,9 @@ export default function AppDev() {
                 <Route element={<GenresPage/>} path="/Genres"/>
                 <Route element={<ForumPage/>} path="/Forum"/>
                 <Route element={<Contacts/>} path="/Contacts"/>
+              </Route>
+              <Route element={<PrivateRoutes role={"ADMIN"}/>}>
+                <Route element={<UsersPage/>} path="/Users"/>
               </Route>
               <Route element={<LoginPage/>} path="/Login"/>
               <Route element={<SignUpPage/>} path="/Signup"/>

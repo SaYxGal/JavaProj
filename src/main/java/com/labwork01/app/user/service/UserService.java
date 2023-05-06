@@ -2,6 +2,7 @@ package com.labwork01.app.user.service;
 
 import com.labwork01.app.configuration.jwt.JwtException;
 import com.labwork01.app.configuration.jwt.JwtProvider;
+import com.labwork01.app.user.controller.UserInfoDto;
 import com.labwork01.app.user.controller.UserLoginDto;
 import com.labwork01.app.user.model.User;
 import com.labwork01.app.user.model.UserRole;
@@ -61,7 +62,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public String loginAndGetToken(UserLoginDto userDto) {
+    public UserInfoDto loginAndGetToken(UserLoginDto userDto) {
         final User user = findByLogin(userDto.getLogin());
         if (user == null) {
             throw new UserNotFoundException(userDto.getLogin());
@@ -69,7 +70,7 @@ public class UserService implements UserDetailsService {
         if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
             throw new UserNotFoundException(user.getLogin());
         }
-        return jwtProvider.generateToken(user.getLogin());
+        return new UserInfoDto(jwtProvider.generateToken(user.getLogin()), user.getRole());
     }
 
     public UserDetails loadUserByToken(String token) throws UsernameNotFoundException {

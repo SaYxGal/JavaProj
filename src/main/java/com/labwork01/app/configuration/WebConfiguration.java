@@ -34,8 +34,8 @@ class WebConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(
             ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("/WEB-INF/view/react/build/static/");
+        registry.addResourceHandler("/public/**")
+                .addResourceLocations("/WEB-INF/view/react/build/public/");
         registry.addResourceHandler("/*.js")
                 .addResourceLocations("/WEB-INF/view/react/build/");
         registry.addResourceHandler("/*.json")

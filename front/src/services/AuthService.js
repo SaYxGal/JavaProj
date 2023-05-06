@@ -15,13 +15,15 @@ const login = (username, password) => {
     .post(API_URL + "/jwt/login", new UserLoginDto({login: username, password: password}))
     .then((response) => {
       if(response.status === 200){
-        localStorage.setItem("token", response.data)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
       }
     });
 };
 
 const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("role");
 };
 const AuthService = {
     register,

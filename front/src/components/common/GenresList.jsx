@@ -3,7 +3,9 @@ export default function GenresList(props) {
     <div className="col-3 genres" style={{backgroundColor: "lightgray", minHeight: "68vh"}}>
       <div className="d-flex flex-row justify-content-between div-with-button">
             <h2>Список жанров</h2>
-            <button className="btn btn-primary m-2" type="button" onClick={()=>props.onAdd()}> Добавить </button>
+            {localStorage.getItem("role") == "ADMIN" &&
+              <button className="btn btn-primary m-2" type="button" onClick={()=>props.onAdd()}> Добавить </button>
+            }
       </div>
       <div className="all_genres">
         <ul id="list-genres">

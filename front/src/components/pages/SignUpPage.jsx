@@ -60,7 +60,7 @@ export default function SignUpPage(props) {
             onChange={(e)=>handleChange(e)}
             required
           />
-          <div>
+          <div className="d-flex flex-row">
             <button className="btn btn-primary m-2" type="submit">
               Создать аккаунт
             </button>

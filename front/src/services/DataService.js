@@ -4,6 +4,15 @@ export default class DataService {
         const response = await axios.get(dataUrlPrefix + url);
         return response.data.map(item => transformer(item));
     }
+    static async readUsersPage(dataUrlPrefix, url, page) {
+        const response = await axios.get(dataUrlPrefix + url + `?page=${page}`,{
+            headers:{
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        });
+        console.log(response.data);
+        return response.data;
+    }
     static async readFilteredByGenre(dataUrlPrefix, url, transformer, id){
         const response = await axios.get(dataUrlPrefix + url + `?genreId=${id}`);
         return response.data.map(item => transformer(item));

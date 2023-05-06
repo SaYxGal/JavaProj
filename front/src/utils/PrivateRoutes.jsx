@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from 'react-router-dom'
 
-const PrivateRoutes = () => {
+const PrivateRoutes = (props) => {
     let getPermission = false;
     let userToken = localStorage.getItem("token");
-    if(userToken){
+    let userRole = localStorage.getItem("role");
+    if(userToken && (props.role == userRole || userRole == "ADMIN")){
         getPermission = true;
     }
     return(

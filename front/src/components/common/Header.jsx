@@ -50,9 +50,12 @@ export default function Header(props) {
                   <ul className="nav nav-tabs justify-content-center border-bottom-0">
                     {props.links.map((route) => (
                       <li key={route.path} className="nav-item">
-                        <Link className="nav-link" to={route.path}>
+                        {
+                          (localStorage.getItem("role") === "ADMIN" || route.label !== "Пользователи") ?
+                          <Link className="nav-link" to={route.path}>
                           {route.label}
-                        </Link>
+                          </Link> : null
+                        }
                       </li>
                     ))}
                   </ul>

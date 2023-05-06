@@ -20,27 +20,31 @@ export default function Container(props) {
                   <p className="card-text">Жанры: {item.genres.map(elem => <><a className="text-decoration-underline" role="button" key={elem.id} onClick={()=>props.filterGenre(elem.id)}>{elem.name.toString()}</a><span> </span></>)}</p>
                 </div>
                 <div className="d-flex justify-content-end">
-                  <a
-                    className="text-end align-self-end"
-                    href="#"
-                    onClick={()=>props.onRemove(item.id)}
-                  >
-                    Удалить
-                  </a>
-                  <a
-                    className="px-2 text-end align-self-end"
-                    href="#"
-                    onClick={()=>props.onEdit(item.id)}
-                  >
-                    Изменить
-                  </a>
-                  <a
-                    className="px-2 text-end align-self-end"
-                    href="#"
-                    onClick={()=>props.onUpdateGenre(item.id)}
-                  >
-                    Изменить жанры
-                  </a>
+                  {localStorage.getItem("role") == "ADMIN" &&
+                  <>
+                    <a
+                      className="text-end align-self-end"
+                      href="#"
+                      onClick={()=>props.onRemove(item.id)}
+                    >
+                      Удалить
+                    </a>
+                    <a
+                      className="px-2 text-end align-self-end"
+                      href="#"
+                      onClick={()=>props.onEdit(item.id)}
+                    >
+                      Изменить
+                    </a>
+                    <a
+                      className="px-2 text-end align-self-end"
+                      href="#"
+                      onClick={()=>props.onUpdateGenre(item.id)}
+                    >
+                      Изменить жанры
+                    </a>
+                  </>
+                  }
                 </div>
               </div>
             </div>
