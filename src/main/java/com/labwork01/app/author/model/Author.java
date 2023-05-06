@@ -1,6 +1,7 @@
 package com.labwork01.app.author.model;
 
 import com.labwork01.app.book.model.Book;
+import com.labwork01.app.user.model.User;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class Author {
     private String patronymic;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "author", fetch = FetchType.EAGER)
     private List<Book> books =new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name= "user_id", nullable = false)
+    private User user;
 
     public List<Book> getBooks() {
         return books;
@@ -71,6 +75,12 @@ public class Author {
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +98,7 @@ public class Author {
                 "id=" + id +
                 ", name='" + name + '\'' + '}' +
                 ", surname='" + surname + '\'' + '}' +
-                ", patronymic='" + patronymic + '\'' + '}';
+                ", patronymic='" + patronymic + '\'' +
+                ", user='" + user.toString() + '\'' + '}' +'}';
     }
 }

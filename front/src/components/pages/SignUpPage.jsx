@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService"
-export default function LoginPage(props) {
+export default function SignUpPage(props) {
   const formRef = React.createRef();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [state, setState] = useState({
     login: "",
-    password: ""
+    password: "",
+    passwordConfirm: ""
   });
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.value});
@@ -16,9 +18,9 @@ export default function LoginPage(props) {
   const handleSubmit = (event) =>{
     event.preventDefault();
     setMessage("");
-    AuthService.login(state.login, state.password).then(
+    AuthService.register(state.login, state.password, state.passwordConfirm).then(
       () => {
-        navigate("/");
+        navigate("/Login");
         window.location.reload();
       },
       (error) => {
@@ -49,13 +51,22 @@ export default function LoginPage(props) {
             onChange={(e)=>handleChange(e)}
             required
           />
+          <h4>Подтверждение пароля</h4>
+          <input
+            className="form-control my-2"
+            type="password"
+            name="passwordConfirm"
+            value={state.passwordConfirm}
+            onChange={(e)=>handleChange(e)}
+            required
+          />
           <div>
             <button className="btn btn-primary m-2" type="submit">
-              Войти
+              Создать аккаунт
             </button>
-            <a href="/Signup" style={{marginTop: 1, marginLeft: 1}}>
-              Зарегистрируйтесь, если нет аккаунта, здесь
-            </a>
+            <Link className="nav-link" to={"/Login"}>
+              Назад
+            </Link>
           </div>
         </form>
         {message && (

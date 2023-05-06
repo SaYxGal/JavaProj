@@ -2,6 +2,7 @@ package com.labwork01.app.book.model;
 
 import com.labwork01.app.author.model.Author;
 import com.labwork01.app.genre.model.Genre;
+import com.labwork01.app.user.model.User;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
+    @ManyToOne
+    @JoinColumn(name= "user_id", nullable = false)
+    private User user;
     public Book() {
     }
 
@@ -89,6 +93,12 @@ public class Book {
     public void setDescription(String description) {
         this.description = description;
     }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -111,6 +121,7 @@ public class Book {
                 ", description='" + description + '\'' +
                 ", author='" + author.toString() + '\'' +
                 ", genres='" + String.join(", ",getGenresName()) + '\'' +
+                ", user='" + user.toString() + '\'' +
                 '}';
     }
 }

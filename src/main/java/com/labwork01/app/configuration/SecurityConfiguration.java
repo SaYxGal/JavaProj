@@ -11,13 +11,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
     private final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
 
@@ -48,6 +52,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/", SPA_URL_MASK).permitAll()
                 .requestMatchers(HttpMethod.POST, UserController.URL_LOGIN).permitAll()
+                .requestMatchers(HttpMethod.POST, UserController.URL_SIGNUP).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -65,7 +70,12 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
-                .requestMatchers("/**/*.{js,html,css,png}")
+                .requestMatchers("/*.js")
+                .requestMatchers("/*.html")
+                .requestMatchers("/*.css")
+                .requestMatchers("/assets/**")
+                .requestMatchers("/favicon.ico")
+                .requestMatchers("/.js", "/.css")
                 .requestMatchers("/swagger-ui/index.html")
                 .requestMatchers("/webjars/**")
                 .requestMatchers("/swagger-resources/**")

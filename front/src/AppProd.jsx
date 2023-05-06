@@ -8,6 +8,7 @@ import ForumPage from './components/pages/ForumPage';
 import Contacts from './components/pages/Contacts';
 import LoginPage from './components/pages/LoginPage';
 import { useState } from 'react';
+import SignUpPage from './components/pages/SignUpPage';
 function Router(props) {
     return useRoutes(props.rootRoute);
   }
@@ -21,6 +22,7 @@ function Router(props) {
       { path: 'authors', element: null, label: 'Авторы' },
       { path: 'forum', element: <ForumPage/>, label: 'Форум' },
       { path: 'login', element: <LoginPage/>},
+      { path: 'signup', element: <SignUpPage/>},
       { path: 'contacts', element: <Contacts/>}
     ];
     const links = routes.filter(route => route.hasOwnProperty('label'));

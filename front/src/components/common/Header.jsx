@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../services/AuthService";
 
 export default function Header(props) {
+  const navigate = useNavigate();
   const[state, setState] = useState({
     text:""
   });
   const handleChange = (event) => {
     setState({ ...state, [event.target.id]: event.target.value });
+  };
+  const handleLogout = () =>{
+    AuthService.logout();
+    navigate("/Login");
+    window.location.reload();
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,9 +50,9 @@ export default function Header(props) {
                   <ul className="nav nav-tabs justify-content-center border-bottom-0">
                     {props.links.map((route) => (
                       <li key={route.path} className="nav-item">
-                        <NavLink className="nav-link" to={route.path}>
+                        <Link className="nav-link" to={route.path}>
                           {route.label}
-                        </NavLink>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -63,9 +71,9 @@ export default function Header(props) {
             </nav>
           </div>
           <span className="col text-end">
-            <NavLink className="nav-link" to={props.single.path}>
-              Вход/Регистрация
-            </NavLink>
+            <Link className="nav-link" onClick={handleLogout} to={""}>
+              Выход
+            </Link>
           </span>
         </div>
       </div>

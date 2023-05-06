@@ -1,5 +1,5 @@
 import './App.css';
-import { useRoutes, Outlet, BrowserRouter } from 'react-router-dom';
+import { useRoutes, Outlet, BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/common/Header';
 import MainPage from './components/pages/MainPage';
 import Footer from './components/common/Footer';
@@ -10,42 +10,38 @@ import { useState } from 'react';
 import AuthorsPage from './components/pages/dev/AuthorsPage';
 import GenresPage from './components/pages/dev/GenresPage';
 import ForumPage from './components/pages/ForumPage'
-function Router(props) {
-  return useRoutes(props.rootRoute);
-}
-
+import SignUpPage from './components/pages/SignUpPage';
+import PrivateRoutes from './utils/PrivateRoutes';
 export default function AppDev() {
   const[searchValue, setSearchValue] = useState();
   const routes = [
-    { index: true, element: <MainPage />},
-    { path: '', element: <MainPage/>, label: 'Главная' },
-    { path: 'Books', element: <BooksPage searchValue={searchValue} setSearchValue={setSearchValue}/>, label: 'Книги' },
-    { path: 'Authors', element: <AuthorsPage/>, label: 'Авторы' },
-    { path: 'Genres', element: <GenresPage/>, label: 'Жанры' },
-    { path: 'Forum', element:<ForumPage/>, label: 'Форум'},
-    { path: 'Login', element: <LoginPage/>},
-    { path: 'Contacts', element: <Contacts/>}
+    { path: '/', label: "Главная" },
+    { path: '/Books', label: "Книги" },
+    { path: '/Authors', label: "Авторы" },
+    { path: '/Genres', label: "Жанры" },
+    { path: '/Forum', label: 'Форум'}
   ];
-  const links = routes.filter(route => route.hasOwnProperty('label'));
-  const rootRoute = [
-    { path: '/', element: render(links), children: routes }
-  ];
-
-  function render(links) {
-    return (
-      <>
-        <Header links={links} single={routes[routes.length-2]} setSearchValue={setSearchValue} />
-        <div className="container-fluid">
-          <Outlet />
-        </div>
-        <Footer link={routes[routes.length-1]}/>
-      </>
-    );
-  }
-
   return (
+    <>
     <BrowserRouter>
-      <Router rootRoute={ rootRoute } />
-    </BrowserRouter>
+        <Header links={routes} setSearchValue={setSearchValue} />
+        <div>
+            <Routes>
+              <Route element={<PrivateRoutes/>}>
+                <Route element={<MainPage/>} path="/" exact />
+                <Route element={<MainPage />} path="*" />
+                <Route element={<BooksPage searchValue={searchValue} setSearchValue={setSearchValue}/>} path="/Books"/>
+                <Route element={<AuthorsPage/>} path="/Authors"/>
+                <Route element={<GenresPage/>} path="/Genres"/>
+                <Route element={<ForumPage/>} path="/Forum"/>
+                <Route element={<Contacts/>} path="/Contacts"/>
+              </Route>
+              <Route element={<LoginPage/>} path="/Login"/>
+              <Route element={<SignUpPage/>} path="/Signup"/>
+            </Routes>
+        </div>
+        <Footer link={{path: '/Contacts'}}/>
+      </BrowserRouter>
+    </>
   );
 }

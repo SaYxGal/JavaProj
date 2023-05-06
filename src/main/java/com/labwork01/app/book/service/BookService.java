@@ -6,7 +6,12 @@ import com.labwork01.app.book.model.Book;
 import com.labwork01.app.book.repository.BookRepository;
 import com.labwork01.app.genre.model.Genre;
 import com.labwork01.app.genre.service.GenreService;
+import com.labwork01.app.user.model.User;
+import com.labwork01.app.user.model.UserRole;
+import com.labwork01.app.user.service.UserService;
 import com.labwork01.app.util.validation.ValidatorUtil;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +23,13 @@ public class BookService {
     private final BookRepository bookRepository;
     private final GenreService genreService;
     private final AuthorService authorService;
+    private final UserService userService;
     private final ValidatorUtil validatorUtil;
-    public BookService(BookRepository bookRepository,GenreService genreService, AuthorService authorService, ValidatorUtil validatorUtil){
+    public BookService(BookRepository bookRepository,GenreService genreService, AuthorService authorService, UserService userService, ValidatorUtil validatorUtil){
         this.bookRepository = bookRepository;
         this.genreService = genreService;
         this.authorService = authorService;
+        this.userService = userService;
         this.validatorUtil = validatorUtil;
     }
 
@@ -32,6 +39,14 @@ public class BookService {
         book.setAuthor(author);
         for (Genre genre: genres) {
             book.addGenre(genre);
+        }
+        Object currentUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(currentUser instanceof UserDetails){
+            String username = ((UserDetails)currentUser).getUsername();
+            User user = userService.findByLogin(username);
+            if(user.getRole() == UserRole.ADMIN){
+                book.setUser(user);
+            }
         }
         validatorUtil.validate(book);
         return bookRepository.save(book);

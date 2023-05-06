@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function Footer(props) {
   return (
     <footer className="mt-auto" style={{ backgroundColor: "rgb(235,185,185)" }}>
@@ -6,9 +6,9 @@ export default function Footer(props) {
         <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
           <ul className="list-unstyled mb-0">
             <li>
-              <NavLink className="nav-link" to={props.link.path}>
+              <Link className="nav-link" to={props.link.path}>
                 Контакты
-              </NavLink>
+              </Link>
             </li>
             <li>
               <a className="nav-link" href="#">

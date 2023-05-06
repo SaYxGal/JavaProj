@@ -6,10 +6,7 @@ import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerF
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 class WebConfiguration implements WebMvcConfigurer {
@@ -21,7 +18,7 @@ class WebConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController(SecurityConfiguration.SPA_URL_MASK).setViewName("forward:/");
         ViewControllerRegistration registration = registry.addViewController("/notFound");
-        registration.setViewName("forward:/index.html");
+        registration.setViewName("forward:/");
         registration.setStatusCode(HttpStatus.OK);
 
         // Alternative way (404 error hits the console):
@@ -33,5 +30,17 @@ class WebConfiguration implements WebMvcConfigurer {
         return container -> {
             container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notFound"));
         };
+    }
+    @Override
+    public void addResourceHandlers(
+            ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/WEB-INF/view/react/build/static/");
+        registry.addResourceHandler("/*.js")
+                .addResourceLocations("/WEB-INF/view/react/build/");
+        registry.addResourceHandler("/*.json")
+                .addResourceLocations("/WEB-INF/view/react/build/");
+        registry.addResourceHandler("/*.ico")
+                .addResourceLocations("/WEB-INF/view/react/build/");
     }
 }
