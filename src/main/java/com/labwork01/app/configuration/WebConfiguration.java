@@ -1,4 +1,4 @@
-package com.labwork01.app;
+package com.labwork01.app.configuration;
 
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -19,6 +19,7 @@ class WebConfiguration implements WebMvcConfigurer {
     }
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController(SecurityConfiguration.SPA_URL_MASK).setViewName("forward:/");
         ViewControllerRegistration registration = registry.addViewController("/notFound");
         registration.setViewName("forward:/index.html");
         registration.setStatusCode(HttpStatus.OK);
