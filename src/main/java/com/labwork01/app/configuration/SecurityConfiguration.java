@@ -53,6 +53,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/", SPA_URL_MASK).permitAll()
                 .requestMatchers(HttpMethod.POST, UserController.URL_LOGIN).permitAll()
                 .requestMatchers(HttpMethod.POST, UserController.URL_SIGNUP).permitAll()
+                .requestMatchers(HttpMethod.GET, UserController.URL_MAIN + "/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

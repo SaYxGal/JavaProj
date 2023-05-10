@@ -10,7 +10,10 @@ export default class DataService {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         });
-        console.log(response.data);
+        return response.data;
+    }
+    static async readUser(dataUrlPrefix, url, login){
+        const response = await axios.get(dataUrlPrefix + url + `/${login}`);
         return response.data;
     }
     static async readFilteredByGenre(dataUrlPrefix, url, transformer, id){

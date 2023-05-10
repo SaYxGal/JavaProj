@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +50,15 @@ public class UserController {
         }
         catch(ValidationException e){
             return e.getMessage();
+        }
+    }
+    @GetMapping(URL_MAIN + "/{login}")
+    public UserDetails getCurrentUser(@PathVariable String login){
+        try{
+            return userService.loadUserByUsername(login);
+        }
+        catch(Exception e){
+            return null;
         }
     }
 }
